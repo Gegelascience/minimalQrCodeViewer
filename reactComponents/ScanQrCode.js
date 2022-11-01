@@ -40,29 +40,42 @@ const ScanQrCode = () => {
 
 
       return (
-        device != null &&
-        hasPermission && (
-          <View style={{flex:1}}>
-            <Camera
-              style={styles.cameraContainer}
-              device={device}
-              isActive={true}
-              frameProcessor={frameProcessor}
-              frameProcessorFps={5}
-            />
-            <View style={styles.resultContainer}>
-              <Text style={styles.barcodeTextURL}>Valeur du Qr Code: {textResult}</Text>
-              <View>
-              {showClipBtn && <TouchableOpacity style={[styles.btnAction,styles.clipBtn]} onPress={() => {Clipboard.setString(textResult)}}><Text style={styles.btnText}>Copier la valeur</Text></TouchableOpacity>}
-                {showLinkBtn && <TouchableOpacity style={[styles.btnAction,styles.linkBtn]} onPress={() => {Linking.openURL(textResult)}}><Text style={styles.btnText}>Accès au lien</Text></TouchableOpacity>}
+
+        <View style={styles.pageContainer}>
+          {
+            device != null &&
+            hasPermission && (
+              <View style={{flex:1}}>
+                <Camera
+                  style={styles.cameraContainer}
+                  device={device}
+                  isActive={true}
+                  frameProcessor={frameProcessor}
+                  frameProcessorFps={5}
+                />
+                <View style={styles.resultContainer}>
+                  <Text style={styles.barcodeTextURL}>Valeur du Qr Code:</Text>
+                  <Text style={styles.barcodeTextURL}>{textResult}</Text>
+                  <View>
+                  {showClipBtn && <TouchableOpacity style={[styles.btnAction,styles.clipBtn]} onPress={() => {Clipboard.setString(textResult)}}><Text style={styles.btnText}>Copier la valeur</Text></TouchableOpacity>}
+                    {showLinkBtn && <TouchableOpacity style={[styles.btnAction,styles.linkBtn]} onPress={() => {Linking.openURL(textResult)}}><Text style={styles.btnText}>Accès au lien</Text></TouchableOpacity>}
+                    
+                  </View>
                 
-              </View>
-            
+                </View>
+                
+               
+              </View>)
+          }
+          {device == null && (
+            <View style={styles.attenteScreen}>
+              <Text>En cours de récupération de la caméra</Text>
             </View>
             
-           
-          </View>
-        )
+          )}
+        </View>
+        
+        
       );
     
     
@@ -71,8 +84,9 @@ const ScanQrCode = () => {
 
 const styles = StyleSheet.create({
     barcodeTextURL: {
-      fontSize: 20,
+      fontSize: 15,
       fontWeight: 'bold',
+      textAlign:"center"
     },
     resultContainer: {
       flex:2,
@@ -95,13 +109,22 @@ const styles = StyleSheet.create({
       backgroundColor:"green"
     },
     cameraContainer: {
-      flex:8,
+      flex:7,
       position: 'relative',
       left: 0,
       right: 0,
       top: 0,
       bottom: 0,
+    },
+    pageContainer: {
+      flex:1,
+    },
+    attenteScreen: {
+      flex:1,
+      justifyContent:"center",
+      alignItems:"center"
     }
+
 
   });
 
