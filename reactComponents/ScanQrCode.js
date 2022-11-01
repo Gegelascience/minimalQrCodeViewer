@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
       backgroundColor:"green"
     },
     cameraContainer: {
-      flex:7,
+      flex:5,
       position: 'relative',
       left: 0,
       right: 0,
